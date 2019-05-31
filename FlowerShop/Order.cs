@@ -34,8 +34,10 @@ namespace FlowerShop
         public Order(IOrderDAO dao, IClient client)
         {
             Id = dao.AddOrder(client);
+            d = dao;
         }
 
+        IOrderDAO d;
         // used when we already have an order with an Id.
         public Order(IOrderDAO dao, IClient client, bool isDelivered = false)
         {
@@ -43,6 +45,7 @@ namespace FlowerShop
             this.isDelivered = isDelivered;
             Client = client;
             Id = dao.AddOrder(client);
+            d = dao;
         }
 
         public void AddFlowers(IFlower flower, int n)
@@ -52,7 +55,7 @@ namespace FlowerShop
 
         public void Deliver()
         {
-            throw new NotImplementedException();
+            d.SetDelivered(this);
         }
     }
 }
